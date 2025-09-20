@@ -1,68 +1,19 @@
 services:
-  keycloak-db:
-    image: postgres:latest
-    command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]
-    environment:
-      POSTGRES_DB: bitnami_keycloak_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+  ollama:
+    # Use 'build' instead of 'image' to build your custom Dockerfile
+    build: src/main/java/md/hack/managementservice/repository
+    container_name: ollama
     ports:
-      - "14012:5432"
+      - "13434:11434"
     volumes:
-      - keycloak-db:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    networks:
-      - nginx_network
-
-  keycloak:
-    image: bitnami/keycloak:24
-    depends_on:
-      keycloak-db:
-        condition: service_healthy
+      - ollama_models:/root/.ollama
+      - ./ollama_init.sh:/usr/local/bin/ollama_init.sh
     environment:
-      KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: pass
-      KEYCLOAK_DATABASE_HOST: keycloak-db
-      KEYCLOAK_DATABASE_PORT: 5432
-      KEYCLOAK_DATABASE_NAME: bitnami_keycloak_db
-      KEYCLOAK_DATABASE_USER: postgres
-      KEYCLOAK_DATABASE_PASSWORD: postgres
-      KEYCLOAK_ENABLE_HTTPS: "true"
-      KEYCLOAK_HTTPS_USE_PEM: "true"
-      KEYCLOAK_HTTPS_CERTIFICATE_KEY_FILE: /fullchain.pem
-      KEYCLOAK_HTTPS_CERTIFICATE_FILE: /fullchain.pem
-      KEYCLOAK_HOSTNAME: "www.mykeycloak.com"
-      KEYCLOAK_HOSTNAME_STRICT: "false"
-      KEYCLOAK_HTTP_RELATIVE_PATH: /auth
-      KEYCLOAK_SPI_CONTENT_SECURITY_POLICY_PROVIDER: "inline-frame-src-allow-all"
-      KEYCLOAK_PROXY_ADDRESS_FORWARDING: "true"
-      KC_CONTENT_SECURITY_POLICY: "frame-src *;"
-      KC_SPI_CONTENT_SECURITY_POLICY_SCRIPTSHASH: "true"
-      KC_SPI_CONTENT_SECURITY_POLICY_USEDEFAULT: "false"
-      #KC_FEATURES_DISABLED: impersonation
-      KEYCLOAK_WEB_ORIGINS: "+"
-      KEYCLOAK_PRODUCTION: "false"
-    ports:
-      - "8040:8443"
-    volumes:
-      - ./fullchain.pem:/fullchain.pem
-    networks:
-      - nginx_network
+      - OLLAMA_INITIAL_MODEL=llama3.1:8b
+    entrypoint: ["/usr/local/bin/ollama_init.sh"]
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "https://www.mykeycloak.com:8040/auth/realms/master" ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    tty: true
 
 volumes:
-  data:
-  keycloak-db:
-
-networks:
-  nginx_network:
-    driver: bridge
+  ollama_models:
+    driver: local
