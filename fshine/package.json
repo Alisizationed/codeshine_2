@@ -13,9 +13,16 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "download:openapi": "curl -k https://localhost:8454/v3/api-docs.yaml -o ./api-spec.yaml",
+    "types:openapi:local": "npx openapi-typescript-codegen --input ./api-spec.yaml --output src/services/openapi --client axios",
+    "types:refresh": "pnpm run download:openapi && pnpm run types:openapi:local",
+    "generate:init:api": "npx @openapi-codegen/cli init",
+    "generate:api": "npx openapi-codegen gen api"
   },
   "dependencies": {
+    "@openapi-codegen/cli": "^3.1.0",
+    "@openapi-codegen/typescript": "^11.0.1",
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.69.0",
     "@trpc/client": "^11.0.0",
@@ -32,7 +39,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.0.15",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.19.17",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.23.0",
