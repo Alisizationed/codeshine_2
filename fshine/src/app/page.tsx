@@ -1,19 +1,3 @@
-import { HeroParallax } from "@/components/ui/hero-parallax";
-import { TracingBeam } from "@/components/ui/tracing-beam";
-
-export default async function Home() {
-
-  return (
-    <>
-      <HeroParallax products={products} />
-      <TracingBeam className="px-6">
-        <div>
-          HELLO MY TEAM
-        </div>
-      </TracingBeam>
-    </>
-  );
-}
 
 export const products = [
   {
@@ -111,3 +95,6 @@ export const products = [
   },
 ];
 
+export default function Home() {
+  return <h1>Hello</h1>
+}
