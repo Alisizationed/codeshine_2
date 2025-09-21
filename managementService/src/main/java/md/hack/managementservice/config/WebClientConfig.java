@@ -13,8 +13,8 @@ import javax.net.ssl.SSLException;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${accounts.url}")
-    private String accountsUrl;
+    @Value("${ai.url}")
+    private String aiUrl;
     @Bean
     public WebClient insecureWebClient() {
         HttpClient httpClient = HttpClient.create().secure(sslContextSpec -> {
@@ -29,7 +29,7 @@ public class WebClientConfig {
 
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .baseUrl(accountsUrl)
+                .baseUrl(aiUrl)
                 .build();
     }
 }

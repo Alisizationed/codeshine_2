@@ -2,7 +2,7 @@ package md.hack.managementservice.security;
 
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import md.da.agrotech.converters.KeycloakJwtRolesConverter;
+import md.hack.managementservice.converters.KeycloakJwtRolesConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                                .pathMatchers("/api", "/swagger-ui/**", "/v3/api-docs.yaml/swagger-config", "v3/api-docs.yaml").permitAll()
+                                .pathMatchers("/api", "/swagger-ui/**", "/v3/api-docs.yaml/swagger-config", "/v3/api-docs.yaml", "v3/api-docs.yaml").permitAll()
 //                                .pathMatchers("/**").authenticated()
 //                                .pathMatchers("/api/recipe", "/api/recipe/**")
 //                                .permitAll()
@@ -83,7 +83,8 @@ public class SecurityConfig {
                 "http://localhost:14012",
                 "http://localhost:8080",
                 "http://localhost:3000",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "*"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "Authorization", "*"));

@@ -4,6 +4,11 @@ spring:
   docker:
     compose:
       enabled: false
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/db
+    username: postgres
+    password: postgres
   #  webflux:
   #    multipart:
   #      max-in-memory-size: 1MB
@@ -54,6 +59,6 @@ help:
   url: https://localhost:8463
 
 ai:
-  url: https://localhost:13434
+  url: http://localhost:13434
   model-name: "nomic-embed-text"
   path: "/api/embeddings"
