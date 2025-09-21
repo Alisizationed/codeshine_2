@@ -3,8 +3,6 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Providers } from "./providers";
-import CustomNavbar from "@/components/CustomNavbar";
-import Footer from "@/components/ui/footer";
 import Wrapper from "@/components/Wrapper";
 
 export const metadata: Metadata = {
@@ -26,9 +24,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Wrapper>
-            <CustomNavbar />
             {children}
-            <Footer />
           </Wrapper>
         </Providers>
       </body>

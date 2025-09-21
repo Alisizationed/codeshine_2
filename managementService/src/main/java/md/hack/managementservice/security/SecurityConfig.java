@@ -2,7 +2,7 @@ package md.hack.managementservice.security;
 
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import md.da.agrotech.converters.KeycloakJwtRolesConverter;
+import md.hack.managementservice.converters.KeycloakJwtRolesConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

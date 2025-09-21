@@ -13,7 +13,7 @@ import javax.net.ssl.SSLException;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${accounts.url}")
+    @Value("${ai.url}")
     private String accountsUrl;
     @Bean
     public WebClient insecureWebClient() {

@@ -4,6 +4,11 @@ spring:
   docker:
     compose:
       enabled: false
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/db
+    username: postgres
+    password: postgres
   #  webflux:
   #    multipart:
   #      max-in-memory-size: 1MB
