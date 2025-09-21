@@ -14,7 +14,11 @@ import javax.net.ssl.SSLException;
 @Configuration
 public class WebClientConfig {
     @Value("${ai.url}")
+<<<<<<< HEAD
     private String aiUrl;
+=======
+    private String accountsUrl;
+>>>>>>> 5d61273a0e3e6e7d9214e45c9186cc5e6e9e1a48
     @Bean
     public WebClient insecureWebClient() {
         HttpClient httpClient = HttpClient.create().secure(sslContextSpec -> {

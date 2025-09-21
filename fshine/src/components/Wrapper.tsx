@@ -6,8 +6,7 @@ import LoadingElement from "./ui/loading-circle";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession();
-
-  return <>{children}</>;
+  // return <>{children}</>;
 
   useEffect(() => {
     if (status === "unauthenticated") {

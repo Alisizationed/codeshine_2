@@ -13,6 +13,7 @@ type QueryFnOptions = {
   signal?: AbortController["signal"];
 };
 
+<<<<<<< HEAD
 export type StreamLlamaResponseError = Fetcher.ErrorWrapper<undefined>;
 
 export type StreamLlamaResponseVariables = {
@@ -49,11 +50,122 @@ export const useStreamLlamaResponse = (
     mutationFn: (variables: StreamLlamaResponseVariables) =>
       fetchStreamLlamaResponse(deepMerge(fetcherOptions, variables)),
     ...options,
+=======
+export type GetLlamaResponseQueryParams = {
+  request: string;
+};
+
+export type GetLlamaResponseError = Fetcher.ErrorWrapper<undefined>;
+
+export type GetLlamaResponseResponse = string[];
+
+export type GetLlamaResponseVariables = {
+  queryParams: GetLlamaResponseQueryParams;
+} & ApiContext["fetcherOptions"];
+
+export const fetchGetLlamaResponse = (
+  variables: GetLlamaResponseVariables,
+  signal?: AbortSignal,
+) =>
+  apiFetch<
+    GetLlamaResponseResponse,
+    GetLlamaResponseError,
+    undefined,
+    {},
+    GetLlamaResponseQueryParams,
+    {}
+  >({ url: "/ai", method: "get", ...variables, signal });
+
+export function getLlamaResponseQuery(variables: GetLlamaResponseVariables): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<GetLlamaResponseResponse>;
+};
+
+export function getLlamaResponseQuery(
+  variables: GetLlamaResponseVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<GetLlamaResponseResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function getLlamaResponseQuery(
+  variables: GetLlamaResponseVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/ai",
+      operationId: "getLlamaResponse",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchGetLlamaResponse(variables, signal),
+  };
+}
+
+export const useSuspenseGetLlamaResponse = <TData = GetLlamaResponseResponse,>(
+  variables: GetLlamaResponseVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      GetLlamaResponseResponse,
+      GetLlamaResponseError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useApiContext(options);
+  return reactQuery.useSuspenseQuery<
+    GetLlamaResponseResponse,
+    GetLlamaResponseError,
+    TData
+  >({
+    ...getLlamaResponseQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useGetLlamaResponse = <TData = GetLlamaResponseResponse,>(
+  variables: GetLlamaResponseVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      GetLlamaResponseResponse,
+      GetLlamaResponseError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useApiContext(options);
+  return reactQuery.useQuery<
+    GetLlamaResponseResponse,
+    GetLlamaResponseError,
+    TData
+  >({
+    ...getLlamaResponseQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+>>>>>>> 5d61273a0e3e6e7d9214e45c9186cc5e6e9e1a48
   });
 };
 
 export type QueryOperation = {
+<<<<<<< HEAD
   path: string;
   operationId: never;
   variables: unknown | reactQuery.SkipToken;
+=======
+  path: "/ai";
+  operationId: "getLlamaResponse";
+  variables: GetLlamaResponseVariables | reactQuery.SkipToken;
+>>>>>>> 5d61273a0e3e6e7d9214e45c9186cc5e6e9e1a48
 };

@@ -21,6 +21,7 @@
     "generate:api": "npx openapi-codegen gen api"
   },
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.1.1",
     "@openapi-codegen/cli": "^3.1.0",
     "@openapi-codegen/typescript": "^11.0.1",
     "@radix-ui/react-separator": "^1.1.7",
@@ -31,6 +32,7 @@
     "@trpc/client": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
     "@trpc/server": "^11.0.0",
+    "ai": "^3.4.33",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.16",
